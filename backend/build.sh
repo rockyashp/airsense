@@ -20,7 +20,7 @@ if ! command -v git-lfs &> /dev/null; then
 fi
 
 echo "==> Pulling Git LFS models and datasets..."
-git lfs install
+git lfs install --force --skip-repo || true
 git lfs pull
 
 echo "==> Installing Python dependencies..."
