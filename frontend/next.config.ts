@@ -1,9 +1,11 @@
 import type { NextConfig } from "next";
 
-const backendUrl =
+const rawBackendUrl =
   process.env.AIRSENSE_API_URL ||
   process.env.NEXT_PUBLIC_API_URL ||
-  "http://127.0.0.1:8000";
+  "https://airsense-api-abxv.onrender.com";
+
+const backendUrl = rawBackendUrl.replace(/\/+$/, "");
 
 const nextConfig: NextConfig = {
   reactCompiler: true,

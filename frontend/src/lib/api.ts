@@ -4,16 +4,11 @@
  */
 
 export function getApiBaseUrl(): string {
-  if (typeof window !== 'undefined') {
-    return '';
-  }
-  if (process.env.AIRSENSE_API_URL) {
-    return process.env.AIRSENSE_API_URL;
-  }
-  if (process.env.NEXT_PUBLIC_API_URL) {
-    return process.env.NEXT_PUBLIC_API_URL;
-  }
-  return 'http://127.0.0.1:8000';
+  const url =
+    process.env.NEXT_PUBLIC_API_URL ||
+    process.env.AIRSENSE_API_URL ||
+    (typeof window === 'undefined' ? 'https://airsense-api-abxv.onrender.com' : '');
+  return url.replace(/\/+$/, '');
 }
 
 export type AqiCategory =
