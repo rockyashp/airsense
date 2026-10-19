@@ -6,8 +6,17 @@ if ! command -v git-lfs &> /dev/null; then
     echo "==> git-lfs not found in system PATH. Downloading portable binary..."
     curl -sL https://github.com/git-lfs/git-lfs/releases/download/v3.5.1/git-lfs-linux-amd64-v3.5.1.tar.gz -o git-lfs.tar.gz
     tar -xzf git-lfs.tar.gz
-    chmod +x git-lfs
-    export PATH="$(pwd):$PATH"
+    
+    LFS_BIN=$(find . -name "git-lfs" -type f | head -n 1)
+    if [ -n "$LFS_BIN" ]; then
+        cp "$LFS_BIN" ./git-lfs
+        chmod +x ./git-lfs
+        export PATH="$(pwd):$PATH"
+        rm -rf git-lfs.tar.gz git-lfs-3.* 2>/dev/null || true
+    else
+        echo "Error: Could not locate git-lfs executable after extraction"
+        exit 1
+    fi
 fi
 
 echo "==> Pulling Git LFS models and datasets..."
